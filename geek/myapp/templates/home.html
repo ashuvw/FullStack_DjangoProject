@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for obj in qs %}
+
+<h1>{{ obj.title }}</h1>
+<p>{{ obj.body }}</p>
+
+<form action="likepost" method='POST' class="ui form" >
+  {% csrf_token  %}
+    <label for="fname">First name:</label><br>
+    <input type="text" id="fname" name="mypost" value="{{ obj.id }}"><br>
+    {% if user not in obj.liked.all %}
+    <button class="ui button positive" type="submit">like</button>
+    {% else %}
+
+    <button class="ui button negative" type="submit">Unlike</button>
+
+    {% endif %}
+  </form>
+  <strong>{{ obj.liked.all.count }}likes</strong>
+
+
+{% endfor  %}
+
+
+
+{% endblock content %}
